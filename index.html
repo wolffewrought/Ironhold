@@ -721,8 +721,15 @@ function installApp(){
   document.getElementById("installBtn").style.display = "none";
 }
 if ("serviceWorker" in navigator && window.self === window.top) {
-  // Only register SW when running as top-level page (not in iframe preview)
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
+  // Unregister any foreign service workers first, then register ours
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    const foreign = regs.filter(r => !r.active || !r.active.scriptURL.includes('sw.js'));
+    return Promise.all(foreign.map(r => r.unregister()));
+  }).then(() => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }).catch(() => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
 }
 
 // ─── PATH BUILDING ────────────────────────────────────────────

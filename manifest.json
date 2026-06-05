@@ -1,8 +1,10 @@
 {
+  "id": "/ironhold/",
   "name": "Ironhold",
   "short_name": "Ironhold",
   "description": "Dark fantasy tower defense — defend the keep, command your forces.",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "landscape",
   "background_color": "#0d0a05",
@@ -16,7 +18,7 @@
     }
   ],
   "shortcuts": [
-    {"name":"Quick Play","url":"./","description":"Jump into a new battle"},
-    {"name":"Endless Mode","url":"./","description":"Survive the endless horde"}
+    {"name": "Quick Play",    "url": "./", "description": "Jump into a new battle"},
+    {"name": "Endless Mode",  "url": "./", "description": "Survive the endless horde"}
   ]
 }
