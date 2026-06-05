@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d0a05">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<!-- manifest.json: deploy alongside this file for PWA install -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>Ironhold</title>
 <style>
 /* Fonts: system stack — no external requests */
@@ -25,7 +27,8 @@
   --hp-green:#3a9a3a;--hp-red:#9a2a2a;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100vh;overflow:hidden;background:var(--bg)}
+html{height:100%;background:#0d0a05}
+body{height:100vh;height:100dvh;overflow:hidden;background:var(--bg)}
 body{
   display:flex;flex-direction:column;
   font-family:Georgia,'Times New Roman',serif;
@@ -36,8 +39,8 @@ body{
 #topbar{
   display:flex;align-items:center;justify-content:space-between;
   background:var(--panel);border-bottom:2px solid var(--border2);
-  padding:6px 12px;gap:8px;flex-shrink:0;
-  min-height:52px;
+  padding:6px 12px;padding-top:max(6px,env(safe-area-inset-top));
+  gap:8px;flex-shrink:0;min-height:52px;
 }
 #topbar .brand{
   font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:18px;letter-spacing:4px;
@@ -122,7 +125,8 @@ body{
 /* BOTTOM BAR */
 #bot{
   background:var(--panel);border-top:2px solid var(--border2);
-  padding:8px 12px;display:flex;align-items:center;gap:8px;
+  padding:8px 12px;padding-bottom:max(8px,env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:8px;
   flex-shrink:0;min-height:52px;
 }
 #waveBtn{
