@@ -217,6 +217,56 @@ body{
 }
 /* ROTATE WARNING */
 #rotate{display:none}
+
+/* ── ORIENTATION MODES ─────────────────────────────────────── */
+
+/* PORTRAIT (default) — canvas fills width, side panel is bottom drawer */
+body:not(.landscape-mode) #main { flex-direction: column; }
+body:not(.landscape-mode) #side {
+  position: fixed;
+  left: 0; right: 0; bottom: 0; top: auto;
+  height: auto; max-height: 70vh;
+  width: 100% !important;
+  transform: translateY(102%);
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+  border-left: none;
+  border-top: 2px solid var(--border2);
+  box-shadow: 0 -8px 32px rgba(0,0,0,.85);
+  z-index: 999;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+body:not(.landscape-mode) #side.open {
+  transform: translateY(0);
+}
+body:not(.landscape-mode) .sec {
+  flex: 1 1 160px;
+  min-width: 140px;
+  border-bottom: none;
+  border-right: 1px solid var(--border);
+}
+body:not(.landscape-mode) #sideToggleBtn { display: flex !important; }
+body:not(.landscape-mode) #sideBackdrop { z-index: 998; }
+
+/* LANDSCAPE — original side-by-side layout */
+body.landscape-mode #main { flex-direction: row; }
+body.landscape-mode #side {
+  position: relative;
+  width: 188px !important;
+  max-height: none;
+  height: auto;
+  transform: none !important;
+  border-top: none;
+  border-left: 2px solid var(--border2);
+  box-shadow: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+body.landscape-mode #sideToggleBtn { display: none !important; }
+body.landscape-mode #sideBackdrop { display: none !important; }
+
 /* old width rule removed — handled in mobile block above */
 /* ACHIEVEMENTS TOAST */
 #achToast{
@@ -351,6 +401,7 @@ button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-bt
   </div>
   <button class="hbtn" id="mobileMenuBtn" style="display:none" onclick="toggleMobileMenu()">⚙</button>
   <div class="controls">
+    <button class="hbtn" id="orientBtn" onclick="toggleOrient()">⟳ Landscape</button>
     <button class="hbtn" id="cbtnColor" onclick="toggleColorblind()">◑ Colorblind</button>
     <button class="hbtn" id="cbtnMotion" onclick="toggleMotion()">◎ Reduce FX</button>
     <button class="hbtn" onclick="showScores()">▤ Scores</button>
@@ -2816,9 +2867,34 @@ function renderAchievements() {
 }
 
 
+
+// ─── ORIENTATION TOGGLE ───────────────────────────────────────
+let preferLandscape = localStorage.getItem('ih_orient') === '1';
+
+function applyOrientation(landscape) {
+  document.body.classList.toggle('landscape-mode', landscape);
+  const btn = document.getElementById('orientBtn');
+  if (btn) btn.textContent = landscape ? '⟳ Portrait' : '⟳ Landscape';
+  // Try to lock via Screen Orientation API (works in standalone PWA)
+  try {
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock(landscape ? 'landscape' : 'portrait').catch(()=>{});
+    }
+  } catch(e){}
+  // Close side panel when switching
+  toggleSidePanel(true);
+  setTimeout(resizeCanvas, 50);
+}
+
+function toggleOrient() {
+  preferLandscape = !preferLandscape;
+  localStorage.setItem('ih_orient', preferLandscape ? '1' : '0');
+  applyOrientation(preferLandscape);
+}
+
 // ─── MOBILE SIDE PANEL ────────────────────────────────────────
 function isMobile() {
-  return window.innerWidth <= 820 || window.innerHeight <= 520;
+  return !preferLandscape || window.innerWidth <= 820 || window.innerHeight <= 520;
 }
 
 function toggleSidePanel(forceClose) {
@@ -2853,6 +2929,8 @@ function updateMobileUI() {
 
 // ─── BOOT ─────────────────────────────────────────────────────
 function boot() {
+  preferLandscape = localStorage.getItem('ih_orient') === '1';
+  applyOrientation(preferLandscape);
   const lm = document.getElementById('loadingMsg');
   if (lm) lm.style.display = 'none';
   initCanvas();
