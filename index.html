@@ -146,13 +146,14 @@ body{
 /* OVERLAYS */
 .ov{
   position:absolute;inset:0;background:rgba(6,4,1,.94);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;z-index:200;gap:14px;padding:20px;
-  overflow-y:auto;
+  display:flex;align-items:center;justify-content:flex-start;
+  flex-direction:column;z-index:200;gap:14px;
+  padding:24px 16px;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
 }
 .ov.hide{display:none}
-.ov h1{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:28px;color:var(--amber);letter-spacing:5px;text-align:center}
-.ov h2{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:17px;color:var(--amber2);letter-spacing:2px;text-align:center}
+.ov h1{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:24px;color:var(--amber);letter-spacing:4px;text-align:center;margin-bottom:-4px}
+.ov h2{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:13px;color:var(--amber2);letter-spacing:2px;text-align:center;margin-bottom:-4px}
 .ov p{color:var(--text2);font-size:13px;text-align:center;max-width:380px;line-height:1.7}
 .ov .srow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .sbox{background:var(--stone);border:1px solid var(--border2);border-radius:4px;padding:10px 14px;text-align:center;min-width:72px}
@@ -167,16 +168,16 @@ body{
 .obtn.sec{border-color:var(--border2);color:var(--text2);background:var(--stone);font-size:12px;padding:9px 18px}
 .obtn.sec:hover{background:var(--stone2)}
 /* CHOICE CARDS */
-.choices{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.choices{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%;max-width:420px}
 .choice{
   background:var(--stone);border:2px solid var(--border2);border-radius:5px;
-  padding:14px 12px;cursor:pointer;transition:all .2s;
-  text-align:center;width:130px;
+  padding:10px 8px;cursor:pointer;transition:all .2s;
+  text-align:center;width:120px;touch-action:manipulation;
 }
 .choice:hover,.choice.sel{border-color:var(--amber);background:var(--stone2)}
-.choice .ch-icon{font-size:28px;margin-bottom:8px}
-.choice .ch-name{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:13px;color:var(--amber2);margin-bottom:5px}
-.choice .ch-desc{font-size:11px;color:var(--text3);line-height:1.5}
+.choice .ch-icon{font-size:22px;margin-bottom:5px}
+.choice .ch-name{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:12px;color:var(--amber2);margin-bottom:3px}
+.choice .ch-desc{font-size:10px;color:var(--text3);line-height:1.4}
 /* WAVE BANNER */
 #wbanner{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -207,14 +208,7 @@ body{
   display:none;z-index:40;font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;letter-spacing:1px;
 }
 /* ROTATE WARNING */
-#rotate{
-  display:none;position:fixed;inset:0;background:var(--bg);z-index:200;
-  align-items:center;justify-content:center;flex-direction:column;
-  gap:16px;text-align:center;padding:24px;
-}
-#rotate h2{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:22px;color:var(--amber2)}
-#rotate p{color:var(--text3);font-size:13px}
-@media(max-width:500px)and(orientation:portrait){#rotate{display:flex}}
+#rotate{display:none}
 /* old width rule removed — handled in mobile block above */
 /* ACHIEVEMENTS TOAST */
 #achToast{
@@ -225,6 +219,15 @@ body{
   font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;letter-spacing:1px;
 }
 #achToast.show{opacity:1}
+
+
+/* Portrait support */
+@media(orientation:portrait){
+  #main{flex-direction:column}
+  #gameWrap{flex:1;min-height:0}
+  body{overflow-y:auto;height:auto;min-height:100dvh}
+  .ov{position:fixed}
+}
 
 /* Touch: remove 300ms click delay on all interactive elements */
 button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-btn {
