@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+
+  <!-- White background filling entire square -->
+  <rect width="512" height="512" fill="#ffffff"/>
+
+  <!-- Grey tower silhouette -->
+  <path fill="#6b7280" fill-rule="evenodd" d="
+    M 166 390
+    L 166 200
+    L 166 140
+    L 210 140
+    L 210 200
+    L 234 200
+    L 234 140
+    L 278 140
+    L 278 200
+    L 302 200
+    L 302 140
+    L 346 140
+    L 346 200
+    L 346 390
+    Z
+
+    M 218 390
+    L 218 352
+    Q 218 314 256 314
+    Q 294 314 294 352
+    L 294 390
+    Z
+  "/>
+
+</svg>
