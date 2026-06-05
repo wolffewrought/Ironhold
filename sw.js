@@ -1,5 +1,5 @@
 // Ironhold Service Worker
-const CACHE = 'ironhold-v2';
+const CACHE = 'ironhold-v3';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
 
 // Install: pre-cache all assets

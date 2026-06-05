@@ -145,13 +145,21 @@ body{
 .bbtn.active{border-color:var(--amber);color:var(--amber2)}
 /* OVERLAYS */
 .ov{
-  position:absolute;inset:0;background:rgba(6,4,1,.94);
-  display:flex;align-items:center;justify-content:flex-start;
-  flex-direction:column;z-index:200;gap:14px;
-  padding:24px 16px;overflow-y:auto;overflow-x:hidden;
+  position:fixed;inset:0;z-index:200;
+  background:rgba(6,4,1,.94);
+  overflow-y:scroll;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  display:block;
 }
-.ov.hide{display:none}
+.ov-inner{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;gap:12px;
+  padding:24px 16px 40px;
+  min-height:100%;width:100%;
+  box-sizing:border-box;
+}
+.ov.hide{display:none!important}
 .ov h1{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:24px;color:var(--amber);letter-spacing:4px;text-align:center;margin-bottom:-4px}
 .ov h2{font-family:'Palatino Linotype','Palatino','Book Antiqua',Georgia,serif;font-size:13px;color:var(--amber2);letter-spacing:2px;text-align:center;margin-bottom:-4px}
 .ov p{color:var(--text2);font-size:13px;text-align:center;max-width:380px;line-height:1.7}
@@ -366,7 +374,7 @@ button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-bt
 
     <!-- OVERLAYS inside gameWrap -->
     <!-- MAIN MENU -->
-    <div class="ov" id="ovMenu">
+    <div class="ov" id="ovMenu"><div class="ov-inner">
       <h1>IRONHOLD</h1>
       <p>Defend the keep. Place towers. Command your forces. Hold the line.</p>
       <h2 style="font-size:13px;margin-top:2px">GAME MODE</h2>
@@ -379,29 +387,29 @@ button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-bt
       <h2 style="font-size:13px;margin-top:4px">DIFFICULTY</h2>
       <div class="choices" id="diffChoices"></div>
       <button class="obtn" onclick="startGame()">MARCH TO WAR</button>
-    </div>
+    </div></div>
 
     <!-- GAME OVER -->
-    <div class="ov hide" id="ovOver">
+    <div class="ov hide" id="ovOver"><div class="ov-inner">
       <h1 id="overTitle">THE KEEP HAS FALLEN</h1>
       <div class="srow" id="overStats"></div>
       <div id="overAchs" style="font-size:11px;color:var(--gold);text-align:center"></div>
       <button class="obtn" onclick="showMenu()">RETURN TO CAMP</button>
-    </div>
+    </div></div>
 
     <!-- HIGH SCORES -->
-    <div class="ov hide" id="ovScores">
+    <div class="ov hide" id="ovScores"><div class="ov-inner">
       <h1>HALL OF IRON</h1>
       <div id="scoreList" style="width:100%;max-width:360px"></div>
       <button class="obtn sec" onclick="hideScores()">CLOSE</button>
-    </div>
+    </div></div>
 
     <!-- ACHIEVEMENTS -->
-    <div class="ov hide" id="ovAchs">
+    <div class="ov hide" id="ovAchs"><div class="ov-inner">
       <h1>HONOURS</h1>
       <div id="achList" style="width:100%;max-width:400px"></div>
       <button class="obtn sec" onclick="document.getElementById('ovAchs').classList.add('hide')">CLOSE</button>
-    </div>
+    </div></div>
   </div>
 
   <!-- SIDE PANEL -->
@@ -441,7 +449,7 @@ button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-bt
 
 
 <!-- Mobile Settings Panel -->
-<div id="mobileMenu" class="ov hide" style="z-index:200">
+<div id="mobileMenu" class="ov hide" style="z-index:200"><div class="ov-inner">
   <h2>SETTINGS</h2>
   <div style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:240px">
     <button class="obtn sec" onclick="toggleColorblind();document.getElementById('cbMob').textContent=Settings.colorblind?'◑ Colorblind: ON':'◑ Colorblind: OFF'" id="cbMob">◑ Colorblind: OFF</button>
@@ -450,7 +458,7 @@ button, .choice, .tbtn, .mbtn, .abtn, .obtn, .hbtn, .bbtn, .ctrl-btn, .action-bt
     <button class="obtn sec" onclick="document.getElementById('ovAchs').classList.remove('hide');renderAchievements();document.getElementById('mobileMenu').classList.add('hide')">★ Honours</button>
   </div>
   <button class="obtn" onclick="document.getElementById('mobileMenu').classList.add('hide')">✕ Close</button>
-</div>
+</div></div>
 
 <!-- BOTTOM BAR -->
 <div id="bot">
